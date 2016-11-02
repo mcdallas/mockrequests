@@ -2,16 +2,18 @@ import re
 import pickle
 import os
 import json
-
 from unittest.mock import Mock
 
 import requests
 
-# __all__ = ['get', 'export']
+ABSPATH = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+
+
+def abspath(path):
+    return os.path.join(ABSPATH, path)
 
 
 def prepare_request(*args, **kwargs):
-    print(args, kwargs)
     r = requests.Request(*args, **kwargs)
     s = requests.Session()
     return s.prepare_request(r)
@@ -48,7 +50,7 @@ def side_effect_post(*args, **kwargs):
 
 
 def load_file(filename, method):
-    with open('response/%s/%s' % (method, filename), 'rb') as fileobj:
+    with open(abspath('response/%s/%s' % (method, filename)), 'rb') as fileobj:
         return pickle.load(fileobj)
 
 get = Mock(side_effect=side_effect_get)
@@ -60,10 +62,10 @@ def dump(request):
     method = request.request.method
 
     i = 1
-    while os.path.exists('response/%s/response%s.p' % (method, i)):
+    while os.path.exists(abspath('response/%s/response%s.p' % (method, i))):
         i += 1
     filename = 'response%s.p' % i
-    with open('response/%s/%s' % (method, filename), 'wb') as fileobj:
+    with open(abspath('response/%s/%s' % (method, filename)), 'wb') as fileobj:
         pickle.dump(request, fileobj)
     return filename
 
@@ -71,7 +73,7 @@ def dump(request):
 def load_map(method):
 
     try:
-        with open('response/%s/map.json' % method, 'r') as fileobj:
+        with open(abspath('response/%s/map.json' % method), 'r') as fileobj:
             d = json.load(fileobj)
     except FileNotFoundError:
         d = {}
@@ -81,7 +83,7 @@ def load_map(method):
 def save_map(d, method):
     if not d:
         d = {}
-    with open('response/%s/map.json' % method, 'w') as fileobj:
+    with open(abspath('response/%s/map.json' % method), 'w') as fileobj:
         json.dump(d, fileobj)
 
 

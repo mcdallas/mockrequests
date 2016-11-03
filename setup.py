@@ -9,11 +9,7 @@ setup(
     author='Mike Dallas',
     author_email='mc-dallas@hotmail.com',
     license='MIT',
-    packages=['mockrequests',
-              'mockrequests.response',
-              'mockrequests.response.GET',
-              'mockrequests.response.POST'
-              ],
+    packages=['mockrequests'],
     classifiers=[
         # How mature is this project? Common values are
         # 3 - Alpha

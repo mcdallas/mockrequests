@@ -3,13 +3,17 @@ from setuptools import setup
 
 setup(
     name='mockrequests',
-    version='0.1.1',
+    version='0.1.2',
     description='Easy unit testing for HTTP requests',
     url='https://github.com/mcdallas/mockrequests',
     author='Mike Dallas',
     author_email='mc-dallas@hotmail.com',
     license='MIT',
-    packages=['mockrequests'],
+    packages=['mockrequests',
+              'mockrequests.response',
+              'mockrequests.response.GET',
+              'mockrequests.response.POST'
+              ],
     classifiers=[
         # How mature is this project? Common values are
         # 3 - Alpha

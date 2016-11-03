@@ -26,6 +26,7 @@ def are_equal(req1, req2):
 
 
 def side_effect(method, *args, **kwargs):
+    """ Main function driving the Mock object """
     request = prepare_request(method, *args, **kwargs)
 
     d = load_map(method)
@@ -50,6 +51,7 @@ def side_effect_post(*args, **kwargs):
 
 
 def load_file(filename, method):
+    """ Unpickles the response object """
     with open(abspath('response/%s/%s' % (method, filename)), 'rb') as fileobj:
         return pickle.load(fileobj)
 
@@ -59,6 +61,7 @@ Request = Mock(side_effect=side_effect)
 
 
 def dump(request):
+    """ Pickles the given response object to a folder corresponding to the request method """
     method = request.request.method
 
     i = 1
@@ -71,7 +74,7 @@ def dump(request):
 
 
 def load_map(method):
-
+    """ Loads the map file from disk """
     try:
         with open(abspath('response/%s/map.json' % method), 'r') as fileobj:
             d = json.load(fileobj)
@@ -81,6 +84,7 @@ def load_map(method):
 
 
 def save_map(d, method):
+    """ Saves the map file to disk """
     if not d:
         d = {}
     with open(abspath('response/%s/map.json' % method), 'w') as fileobj:
@@ -88,7 +92,7 @@ def save_map(d, method):
 
 
 def save(response, regex=None, strict=False):
-    """ Pickles the response object and creates a reference to it in the map file """
+    """ Saves the response object and creates a reference to it in the map file """
     request = response.history[0].request if response.history else response.request  # The original request object
     url = request.url
     method = response.request.method

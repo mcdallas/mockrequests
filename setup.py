@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name='mockrequests',
-    version='0.1.0',
+    version='0.1.1',
     description='Easy unit testing for HTTP requests',
     url='https://github.com/mcdallas/mockrequests',
     author='Mike Dallas',

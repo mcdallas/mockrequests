@@ -60,6 +60,10 @@ post = Mock(side_effect=side_effect_post)
 Request = Mock(side_effect=side_effect)
 
 
+class Session:
+    get = get
+    post = post
+
 def dump(request):
     """ Pickles the given response object to a folder corresponding to the request method """
     method = request.request.method
